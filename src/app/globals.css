@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+:root {
+  --background: #faf6ee; /* Devotional warm ivory background */
+  --foreground: #1e1915; /* Dark charcoal-stone for readability */
+  --brand-orange: #f26f21; /* Rich Saffron */
+  --brand-green: #1f572a; /* Deep Forest Emerald */
+  --brand-yellow: #f5b316; /* Warm Marigold Yellow */
+  --brand-teal: #0d7f8a; /* Deep Spiritual Teal */
+  --brand-crimson: #7b1113; /* Sacred Crimson */
+  --brand-gold: #cfa856; /* Metallic Gold Accent */
+  --brand-cosmic: #0a0e1a; /* Celestial Deep Midnight */
+}
+
+@theme {
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-green: var(--brand-green);
+  --color-brand-yellow: var(--brand-yellow);
+  --color-brand-teal: var(--brand-teal);
+  --color-brand-crimson: var(--brand-crimson);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-cosmic: var(--brand-cosmic);
+  
+  --animate-float-diya: float-diya 5s ease-in-out infinite;
+  --animate-sway: sway 6s ease-in-out infinite;
+  --animate-bell-ring: bell-ring 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  --animate-glow-pulse: glow-pulse 3s infinite ease-in-out;
+  --animate-spin-slow: spin 20s linear infinite;
+  
+  @keyframes float-diya {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(1deg);
+    }
+  }
+  @keyframes sway {
+    0%, 100% {
+      transform: translateX(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateX(6px) rotate(-0.5deg);
+    }
+  }
+  @keyframes bell-ring {
+    0%, 100% { transform: rotate(0deg); transform-origin: top center; }
+    15% { transform: rotate(15deg); transform-origin: top center; }
+    30% { transform: rotate(-12deg); transform-origin: top center; }
+    45% { transform: rotate(9deg); transform-origin: top center; }
+    60% { transform: rotate(-6deg); transform-origin: top center; }
+    75% { transform: rotate(3deg); transform-origin: top center; }
+    90% { transform: rotate(-1deg); transform-origin: top center; }
+  }
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 15px rgba(242, 111, 33, 0.2), 0 0 30px rgba(207, 168, 86, 0.1);
+    }
+    50% {
+      box-shadow: 0 0 25px rgba(242, 111, 33, 0.45), 0 0 45px rgba(207, 168, 86, 0.3);
+    }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+
+/* Subtle spiritual background grid pattern */
+.spiritual-grid {
+  background-size: 60px 60px;
+  background-image: 
+    linear-gradient(to right, rgba(242, 111, 33, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(242, 111, 33, 0.02) 1px, transparent 1px);
+}
+
+/* Custom premium card design */
+.spiritual-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(207, 168, 86, 0.25);
+  box-shadow: 0 10px 30px -10px rgba(123, 17, 19, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.spiritual-card:hover {
+  border-color: var(--brand-gold);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(123, 17, 19, 0.12);
+}
+
+/* Glassmorphism utility */
+.glassmorphism {
+  background: rgba(253, 251, 247, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(207, 168, 86, 0.15);
+}
+
+/* Floating Contact Elements */
+.floating-contact-bar {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 100;
+}
+
+.floating-contact-btn {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-contact-btn:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.15);
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f7f3e8;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--brand-gold);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-orange);
+}
+
+/* Temple Background Overlays */
+.temple-hero-overlay {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.temple-hero-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 14, 26, 0.6) 0%, rgba(10, 14, 26, 0.9) 100%);
+  z-index: 1;
+}
+
