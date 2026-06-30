@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, Volume2, Maximize2, Users, Flame, Settings, Share2 } from "lucide-react";
+import { supabase } from "@/lib/supabaseClient";
 
-const streams = [
+const defaultStreams = [
   {
     temple: "Ganga Aarti, Har Ki Pauri",
     location: "Haridwar, Uttarakhand",
@@ -32,11 +33,43 @@ const streams = [
 ];
 
 export default function LiveDarshan() {
-  const [isPlaying, setIsPlaying] = useState<Record<number, boolean>>({
-    0: true,
-    1: true,
-    2: true,
-  });
+  const [streams, setStreams] = useState<any[]>([]);
+  const [isPlaying, setIsPlaying] = useState<Record<number, boolean>>({});
+
+  useEffect(() => {
+    const fetchStreams = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("temples")
+          .select("name, location, live_stream_url, description");
+
+        if (!error && data && data.length > 0) {
+          const formatted = data
+            .filter((t) => t.live_stream_url)
+            .map((t, idx) => ({
+              temple: t.name,
+              location: t.location,
+              viewers: String(Math.floor(Math.random() * 5000) + 2000),
+              gradient: idx % 3 === 0
+                ? "from-orange-700 via-amber-900 to-stone-950"
+                : idx % 3 === 1
+                ? "from-red-900 via-[#7b1113] to-stone-950"
+                : "from-[#cfa856]/90 via-amber-800 to-stone-950",
+              visualizerColor: idx % 3 === 0 ? "bg-brand-orange" : idx % 3 === 1 ? "bg-brand-crimson" : "bg-brand-yellow",
+              description: t.description,
+              embedUrl: t.live_stream_url
+            }));
+          setStreams(formatted.length > 0 ? formatted : defaultStreams);
+        } else {
+          setStreams(defaultStreams);
+        }
+      } catch (err) {
+        console.error("Failed to load live streams:", err);
+        setStreams(defaultStreams);
+      }
+    };
+    fetchStreams();
+  }, []);
 
   const togglePlay = (index: number) => {
     setIsPlaying((prev) => ({ ...prev, [index]: !prev[index] }));

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Compass, Sparkles } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
-export default function Hero() {
+export default function Hero({ title, subtitle }: { title?: string; subtitle?: string }) {
   const [isRinging, setIsRinging] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -153,8 +153,14 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.15 }}
           className="text-4xl sm:text-5xl md:text-7xl font-serif font-black tracking-tight leading-[1.15]"
         >
-          Connecting <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-orange via-brand-yellow to-brand-gold">Devotion</span> <br />
-          with <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-teal via-[#5ea5ad] to-white">Next-Gen Technology</span>
+          {title ? (
+            <span>{title}</span>
+          ) : (
+            <>
+              Connecting <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-orange via-brand-yellow to-brand-gold">Devotion</span> <br />
+              with <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-teal via-[#5ea5ad] to-white">Next-Gen Technology</span>
+            </>
+          )}
         </motion.h1>
 
         {/* Subtitle */}
@@ -164,7 +170,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.25 }}
           className="mt-6 text-sm sm:text-base md:text-lg text-stone-200 max-w-3xl mx-auto leading-relaxed font-sans"
         >
-          Access verified Pandits, explore holy shrines digitally, generate computational AI birth charts, and stream live darshans. We secure your traditional worship through modern technological nodes.
+          {subtitle || "Access verified Pandits, explore holy shrines digitally, generate computational AI birth charts, and stream live darshans. We secure your traditional worship through modern technological nodes."}
         </motion.p>
 
         {/* Action Buttons */}

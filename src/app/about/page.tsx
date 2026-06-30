@@ -3,13 +3,40 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Sparkles, Shield, Cpu, Cloud, Globe, Heart, Compass, MapPin } from "lucide-react";
+import { supabase } from "@/lib/supabaseClient";
 
 export const metadata = {
   title: "Our Heritage & Vision | Nighwan Technology",
   description: "Learn about the mission, technological innovations, and Vedic vision of Nighwan Technology. Bridging sacred devotion with next-generation edge nodes.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  let heroTitle = "Bridging the Sacred & the Modern";
+  let heroSub = "We are a collective of Vedic Acharyas, technology architects, and software engineers unified by a single directive: to secure spiritual traditions through authentic systems.";
+  let missionTitle = "Devotional Authenticity, Tech Reliability";
+  let missionBody = "Nighwan Technology Pvt. Ltd. was founded on the belief that geography or modern schedules shouldn't restrict access to genuine Vedic worship. By standardizing pandit credentials, verifying scriptural protocols, and utilizing high-performance edge streaming networks, we ensure your devotion reaches the destination with absolute integrity.";
+  let pledgeText = "We pledge to allocate 15% of all digital booking commissions directly towards the restoration of neglected heritage temples, maintaining gaushalas, and supporting the traditional Gurukul schooling of underprivileged children.";
+
+  try {
+    const { data: contents } = await supabase
+      .from("page_contents")
+      .select("id, content");
+
+    if (contents) {
+      const getVal = (id: string, fallback: string) => {
+        const found = contents.find((c) => c.id === id);
+        return found ? found.content : fallback;
+      };
+      heroTitle = getVal("about_hero_title", heroTitle);
+      heroSub = getVal("about_hero_sub", heroSub);
+      missionTitle = getVal("about_mission_title", missionTitle);
+      missionBody = getVal("about_mission_body", missionBody);
+      pledgeText = getVal("home_pillars_pledge", pledgeText);
+    }
+  } catch (err) {
+    console.error("Failed to load about page contents:", err);
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-[#faf6ee] text-[#1e1915] font-sans">
       <Navbar />
@@ -29,10 +56,10 @@ export default function AboutPage() {
               Vedic Heritage
             </span>
             <h1 className="text-3xl sm:text-5xl font-serif font-black tracking-tight leading-tight">
-              Bridging the <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-orange via-brand-yellow to-brand-gold">Sacred</span> & the <span className="text-[#5ea5ad]">Modern</span>
+              {heroTitle}
             </h1>
-            <p className="mt-4 text-stone-200 max-w-2xl mx-auto text-xs sm:text-sm md:text-base leading-relaxed">
-              We are a collective of Vedic Acharyas, technology architects, and software engineers unified by a single directive: to secure spiritual traditions through authentic systems.
+            <p className="mt-4 text-stone-200 max-w-2xl mx-auto text-xs sm:text-sm md:text-base leading-relaxed font-light">
+              {heroSub}
             </p>
           </div>
           <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-crimson via-brand-orange via-brand-gold to-brand-crimson" />
@@ -63,10 +90,10 @@ export default function AboutPage() {
               <div>
                 <span className="text-xs font-bold uppercase tracking-widest text-[#7b1113]">Our Mission</span>
                 <h2 className="text-2xl sm:text-3.5xl font-serif font-black text-stone-950 mt-2">
-                  Devotional Authenticity, Tech Reliability
+                  {missionTitle}
                 </h2>
                 <p className="mt-4 text-stone-600 leading-relaxed text-xs sm:text-sm">
-                  Nighwan Technology Pvt. Ltd. was founded on the belief that geography or modern schedules shouldn&apos;t restrict access to genuine Vedic worship. By standardizing pandit credentials, verifying scriptural protocols, and utilizing high-performance edge streaming networks, we ensure your devotion reaches the destination with absolute integrity.
+                  {missionBody}
                 </p>
               </div>
 
@@ -177,7 +204,7 @@ export default function AboutPage() {
             <span className="text-brand-orange text-xs font-bold uppercase tracking-widest">Our Pledge</span>
             <h3 className="text-3xl sm:text-4.5xl font-serif font-black text-white">Trust, Transparency & Restorations</h3>
             <p className="mt-4 text-stone-300 max-w-2xl mx-auto text-xs sm:text-sm leading-relaxed">
-              We pledge to allocate 15% of all digital booking commissions directly towards the restoration of neglected heritage temples, maintaining gaushalas, and supporting the traditional Gurukul schooling of underprivileged children.
+              {pledgeText}
             </p>
             <div className="pt-6 flex flex-wrap justify-center gap-6">
               <Link
