@@ -25,7 +25,7 @@ export default function Hero({ title, subtitle }: { title?: string; subtitle?: s
     <section 
       className="relative min-h-screen flex flex-col pt-28 md:pt-36 pb-20 overflow-hidden bg-stone-950 text-white"
       style={{
-        backgroundImage: "linear-gradient(to bottom, rgba(10, 14, 26, 0.5) 0%, rgba(10, 14, 26, 0.85) 100%), url('/temple_hero.png')",
+        backgroundImage: "linear-gradient(to bottom, rgba(10, 14, 26, 0.5) 0%, rgba(10, 14, 26, 0.85) 100%), url('/temple_sangam.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
