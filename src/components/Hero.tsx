@@ -23,7 +23,7 @@ export default function Hero({ title, subtitle }: { title?: string; subtitle?: s
 
   return (
     <section 
-      className="relative min-h-screen flex items-center justify-center pt-32 pb-20 overflow-hidden bg-stone-950 text-white"
+      className="relative min-h-screen flex flex-col pt-28 md:pt-36 pb-20 overflow-hidden bg-stone-950 text-white"
       style={{
         backgroundImage: "linear-gradient(to bottom, rgba(10, 14, 26, 0.5) 0%, rgba(10, 14, 26, 0.85) 100%), url('/temple_hero.png')",
         backgroundSize: "cover",
@@ -133,7 +133,8 @@ export default function Hero({ title, subtitle }: { title?: string; subtitle?: s
       </div>
 
       {/* Main Content Area */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
+      <div className="flex-grow flex items-center justify-center z-20 w-full">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative w-full">
         
         {/* Spiritual Tech Badge */}
         <motion.div
@@ -225,6 +226,7 @@ export default function Hero({ title, subtitle }: { title?: string; subtitle?: s
           </div>
         </motion.div>
 
+        </div>
       </div>
     </section>
   );
