@@ -14,6 +14,7 @@ const navItems = [
   { name: "Book Puja", href: "/book-puja" },
   { name: "Astrology", href: "/astrology" },
   { name: "Temples", href: "/temples" },
+  { name: "Events", href: "/events" },
   { name: "Contact", href: "/contact" },
 ];
 

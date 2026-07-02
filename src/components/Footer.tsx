@@ -121,6 +121,9 @@ export default function Footer() {
                 <Link href="/temples" className="hover:text-brand-teal transition-colors">Live Darshan</Link>
               </li>
               <li>
+                <Link href="/events" className="hover:text-brand-orange transition-colors">Utsav Calendar</Link>
+              </li>
+              <li>
                 <Link href="/contact" className="hover:text-brand-orange transition-colors">Help sanctuary</Link>
               </li>
             </ul>
