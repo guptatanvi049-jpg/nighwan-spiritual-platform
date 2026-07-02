@@ -64,6 +64,10 @@ export default function BookPujaPage() {
       setErrorMsg("Please fill in your name, email, and phone number to complete gotra sankalpa.");
       return;
     }
+    if (phone.length !== 10) {
+      setErrorMsg("Phone number must be exactly 10 digits.");
+      return;
+    }
 
     setLoading(true);
     setErrorMsg("");
@@ -413,13 +417,18 @@ export default function BookPujaPage() {
                             </div>
                           </div>
                           <div>
-                            <label className="block text-[10px] font-bold text-stone-500 uppercase tracking-widest mb-1.5">Phone Number</label>
+                            <label className="block text-[10px] font-bold text-stone-500 uppercase tracking-widest mb-1.5">Phone Number (10 digits)</label>
                             <input
                               type="tel"
                               required
                               value={phone}
-                              onChange={(e) => setPhone(e.target.value)}
-                              placeholder="e.g. +91 98765 43210"
+                              onChange={(e) => {
+                                const onlyNums = e.target.value.replace(/[^0-9]/g, "");
+                                if (onlyNums.length <= 10) {
+                                  setPhone(onlyNums);
+                                }
+                              }}
+                              placeholder="e.g. 9876543210"
                               className="w-full bg-[#faf6ee]/50 border border-stone-200 focus:border-brand-crimson focus:ring-1 focus:ring-brand-crimson/20 rounded-xl p-3 text-xs font-semibold outline-none transition-all text-stone-900"
                             />
                           </div>
