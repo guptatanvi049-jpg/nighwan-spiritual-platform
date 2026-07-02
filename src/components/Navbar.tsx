@@ -60,7 +60,7 @@ export default function Navbar() {
       <nav
         className={`transition-all duration-300 ${
           scrolled
-            ? "glassmorphism py-2.5 shadow-md shadow-brand-crimson/5 border-b border-[#cfa856]/20"
+            ? "bg-[#faf6ee] py-2.5 shadow-md shadow-brand-crimson/5 border-b border-[#cfa856]/20"
             : "bg-[#faf6ee]/90 backdrop-blur-md py-4 border-b border-stone-200/40"
         }`}
       >
@@ -152,7 +152,7 @@ export default function Navbar() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden glassmorphism border-t border-stone-200/50 shadow-inner"
+              className="md:hidden bg-[#faf6ee] border-t border-stone-200/50 shadow-inner"
             >
               <div className="px-4 pt-4 pb-6 space-y-3">
                 {navItems.map((item) => {
