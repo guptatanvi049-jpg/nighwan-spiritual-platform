@@ -4,7 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, MapPin, Send, HelpCircle, ChevronDown, ChevronUp, CheckCircle2 } from "lucide-react";
+import { Mail, Phone, MapPin, Send, HelpCircle, ChevronDown, ChevronUp, CheckCircle2, AlertCircle } from "lucide-react";
+import { supabase } from "@/lib/supabaseClient";
 
 interface FAQItem {
   question: string;
@@ -33,6 +34,7 @@ const faqs: FAQItem[] = [
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -47,13 +49,31 @@ export default function ContactPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.name && formData.email && formData.message) {
+    if (!formData.name || !formData.email || !formData.message) return;
+
+    setErrorMsg("");
+    try {
+      const { error } = await supabase
+        .from("contacts")
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            subject: formData.subject || null,
+            message: formData.message,
+          }
+        ]);
+
+      if (error) throw error;
+
       setSubmitted(true);
       setFormData({ name: "", email: "", subject: "", message: "" });
       if (timerRef.current) clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => setSubmitted(false), 5000);
+    } catch (err: any) {
+      setErrorMsg(err.message || "Failed to submit message to database.");
     }
   };
 
@@ -111,6 +131,14 @@ export default function ContactPage() {
               </AnimatePresence>
 
               <h3 className="text-2xl font-serif font-black text-[#1e1915] mb-6">Send a Message</h3>
+              
+              {errorMsg && (
+                <div className="flex items-center gap-2 p-3 bg-rose-50 border border-rose-100 rounded-xl text-rose-600 text-xs font-semibold mb-4">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  <span>{errorMsg}</span>
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
