@@ -475,7 +475,14 @@ export default function BookPujaPage() {
             </div>
 
             {/* Decorative Guidelines Sidebar */}
-            <div className="lg:col-span-5 bg-stone-950 rounded-3xl p-8 border border-[#cfa856]/20 text-white relative shadow-xl overflow-hidden flex flex-col justify-between h-full space-y-6">
+            <div 
+              className="lg:col-span-5 rounded-3xl p-8 border border-[#cfa856]/20 text-white relative shadow-xl overflow-hidden flex flex-col justify-between h-full space-y-6 min-h-[400px]"
+              style={{
+                backgroundImage: "linear-gradient(to bottom, rgba(10, 14, 26, 0.8) 0%, rgba(10, 14, 26, 0.95) 100%), url('/puja_ritual.png')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
               <div className="absolute inset-0 spiritual-grid opacity-5 pointer-events-none" />
 
               <div>

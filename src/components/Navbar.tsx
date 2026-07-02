@@ -50,7 +50,7 @@ export default function Navbar() {
               +91 98765 43210
             </a>
           </div>
-          <div className="flex items-center gap-4 text-brand-gold">
+          <div className="flex items-center gap-4 text-[#faf6ee]">
             <span>✨ Complete Vedic Astrological Consultations & Rituals</span>
           </div>
         </div>
