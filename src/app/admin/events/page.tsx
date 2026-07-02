@@ -15,6 +15,13 @@ interface EventItem {
   status: "UPCOMING" | "ONGOING" | "COMPLETED";
 }
 
+const getEventImage = (url: string) => {
+  if (!url) return "/event_shivratri.jpg";
+  if (url.includes("default_shivratri.jpg")) return "/event_shivratri.jpg";
+  if (url.includes("default_somvar.jpg")) return "/event_somvar.jpg";
+  return url;
+};
+
 export default function AdminEventsPage() {
   const [events, setEvents] = useState<EventItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -237,7 +244,7 @@ export default function AdminEventsPage() {
               <div>
                 <div className="relative h-48 bg-stone-900">
                   <img
-                    src={ev.image_url || "/event_shivratri.jpg"}
+                    src={getEventImage(ev.image_url)}
                     alt={ev.title}
                     className="w-full h-full object-cover"
                   />
@@ -365,7 +372,7 @@ export default function AdminEventsPage() {
                 <div className="flex items-center gap-4">
                   {imageUrl && (
                     <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-[#cfa856]/35 flex-shrink-0 bg-stone-900">
-                      <img src={imageUrl} alt="preview" className="w-full h-full object-cover" />
+                      <img src={getEventImage(imageUrl)} alt="preview" className="w-full h-full object-cover" />
                     </div>
                   )}
                   <label className="flex-grow flex items-center justify-center gap-2 border border-dashed border-[#cfa856]/40 hover:border-brand-orange rounded-2xl py-5 px-4 cursor-pointer hover:bg-brand-orange/5 transition-all text-xs font-bold text-stone-500">

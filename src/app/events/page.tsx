@@ -10,6 +10,13 @@ export const metadata = {
   description: "Check upcoming Vedic homams, festival pujas, solar transit prayers, and register for digital gotra sankalpa bookings.",
 };
 
+const getEventImage = (url: string) => {
+  if (!url) return "/event_shivratri.jpg";
+  if (url.includes("default_shivratri.jpg")) return "/event_shivratri.jpg";
+  if (url.includes("default_somvar.jpg")) return "/event_somvar.jpg";
+  return url;
+};
+
 export default async function EventsPage() {
   let eventsList: any[] = [];
   try {
@@ -64,7 +71,7 @@ export default async function EventsPage() {
                   <div>
                     <div className="relative h-56 bg-stone-900">
                       <Image
-                        src={ev.image_url || "/event_shivratri.jpg"}
+                        src={getEventImage(ev.image_url)}
                         alt={ev.title}
                         fill
                         className="object-cover"
