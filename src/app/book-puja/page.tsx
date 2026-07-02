@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 import { Flame, MapPin, Calendar, User, ShieldCheck, CheckCircle2, ArrowRight, ArrowLeft, Loader2, Sparkles, AlertCircle } from "lucide-react";
+import { supabase } from "@/lib/supabaseClient";
 
 const rituals = [
   { id: "rudra", name: "Rudrabhishek Puja", price: "5,100", time: "2 Hours" },
@@ -34,6 +35,12 @@ export default function BookPujaPage() {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   
+  // Devotee Information
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [completed, setCompleted] = useState(false);
 
@@ -48,17 +55,48 @@ export default function BookPujaPage() {
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (!date || !time) {
       alert("Please choose a date and time first.");
       return;
     }
+    if (!userName || !email || !phone) {
+      setErrorMsg("Please fill in your name, email, and phone number to complete gotra sankalpa.");
+      return;
+    }
+
     setLoading(true);
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      setLoading(false);
+    setErrorMsg("");
+
+    try {
+      const amountDecimal = parseFloat(selectedRitual.price.replace(/,/g, ""));
+      const timeString = time.length === 5 ? time + ":00" : time;
+      
+      const { error } = await supabase
+        .from("bookings")
+        .insert([
+          {
+            ritual_name: selectedRitual.name,
+            temple_name: selectedTemple.name,
+            pandit_name: selectedPandit.name,
+            booking_date: date,
+            booking_time: timeString,
+            user_name: userName,
+            email: email,
+            phone: phone,
+            amount: amountDecimal,
+            payment_id: "PAY-" + Math.random().toString(36).substring(2, 9).toUpperCase(),
+          }
+        ]);
+
+      if (error) throw error;
+      
       setCompleted(true);
-    }, 2500);
+    } catch (err: any) {
+      setErrorMsg(err.message || "Failed to submit booking to database.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleReset = () => {
@@ -66,6 +104,10 @@ export default function BookPujaPage() {
     setCompleted(false);
     setDate("");
     setTime("");
+    setUserName("");
+    setEmail("");
+    setPhone("");
+    setErrorMsg("");
   };
 
   return (
@@ -313,6 +355,13 @@ export default function BookPujaPage() {
                       <div className="space-y-6">
                         <h4 className="text-lg font-serif font-bold text-stone-900 mb-2">Review Sankalpa Details</h4>
                         
+                        {errorMsg && (
+                          <div className="flex items-center gap-2 p-3 bg-rose-50 border border-rose-100 rounded-xl text-rose-600 text-xs font-semibold">
+                            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                            <span>{errorMsg}</span>
+                          </div>
+                        )}
+
                         <div className="bg-[#faf6ee]/80 p-6 rounded-2xl border border-[#cfa856]/20 space-y-4">
                           <div className="flex justify-between items-center text-xs sm:text-sm border-b border-stone-200/40 pb-3">
                             <span className="text-stone-500 font-semibold">Ritual Selected</span>
@@ -333,6 +382,46 @@ export default function BookPujaPage() {
                           <div className="flex justify-between items-center text-sm pt-2">
                             <span className="text-stone-900 font-bold">Total Dakshina Due</span>
                             <span className="font-serif font-black text-xl text-brand-crimson">₹{selectedRitual.price}/-</span>
+                          </div>
+                        </div>
+
+                        {/* Devotee details form */}
+                        <div className="space-y-4 border-t border-stone-100 pt-6">
+                          <h5 className="text-xs font-bold text-stone-400 uppercase tracking-widest">Devotee Information</h5>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-[10px] font-bold text-stone-500 uppercase tracking-widest mb-1.5">Full Name (Gotra optional)</label>
+                              <input
+                                type="text"
+                                required
+                                value={userName}
+                                onChange={(e) => setUserName(e.target.value)}
+                                placeholder="e.g. Amit Sharma (Kashyap)"
+                                className="w-full bg-[#faf6ee]/50 border border-stone-200 focus:border-brand-crimson focus:ring-1 focus:ring-brand-crimson/20 rounded-xl p-3 text-xs font-semibold outline-none transition-all text-stone-900"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] font-bold text-stone-500 uppercase tracking-widest mb-1.5">Email Address</label>
+                              <input
+                                type="email"
+                                required
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="e.g. amit@gmail.com"
+                                className="w-full bg-[#faf6ee]/50 border border-stone-200 focus:border-brand-crimson focus:ring-1 focus:ring-brand-crimson/20 rounded-xl p-3 text-xs font-semibold outline-none transition-all text-stone-900"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-[10px] font-bold text-stone-500 uppercase tracking-widest mb-1.5">Phone Number</label>
+                            <input
+                              type="tel"
+                              required
+                              value={phone}
+                              onChange={(e) => setPhone(e.target.value)}
+                              placeholder="e.g. +91 98765 43210"
+                              className="w-full bg-[#faf6ee]/50 border border-stone-200 focus:border-brand-crimson focus:ring-1 focus:ring-brand-crimson/20 rounded-xl p-3 text-xs font-semibold outline-none transition-all text-stone-900"
+                            />
                           </div>
                         </div>
                       </div>
