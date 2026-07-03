@@ -1,5 +1,6 @@
 "use client";
 
+// Trigger redeployment to apply Vercel Toolbar removal settings
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
