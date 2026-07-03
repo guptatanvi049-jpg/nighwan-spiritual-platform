@@ -50,8 +50,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-[#faf6ee] text-[#1e1915] font-sans">
       {/* Sidebar Navigation */}
-      <aside className="w-full md:w-64 bg-stone-950 text-white flex flex-col border-r border-[#cfa856]/20">
-        <div className="p-6 border-b border-stone-850 flex items-center gap-3">
+      <aside className="w-full md:w-64 bg-[#7b1113] text-white flex flex-col border-r border-[#cfa856]/20">
+        <div className="p-6 border-b border-white/10 flex items-center gap-3">
           <div className="relative h-10 w-24">
             <Image
               src="/logo.jpeg"
@@ -60,7 +60,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               className="object-contain rounded"
             />
           </div>
-          <span className="text-[10px] font-bold text-brand-gold bg-brand-orange/15 px-2 py-0.5 rounded border border-[#cfa856]/30 uppercase">
+          <span className="text-[10px] font-bold text-brand-gold bg-white/10 px-2 py-0.5 rounded border border-[#cfa856]/30 uppercase">
             Admin
           </span>
         </div>
@@ -76,7 +76,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
                   isActive
                     ? "bg-brand-orange text-white shadow-md shadow-brand-orange/20"
-                    : "text-stone-400 hover:text-white hover:bg-stone-850"
+                    : "text-stone-200 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -86,17 +86,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           })}
         </nav>
 
-        <div className="p-4 border-t border-stone-850 space-y-1">
+        <div className="p-4 border-t border-white/10 space-y-1">
           <Link
             href="/"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-stone-450 hover:text-white hover:bg-stone-850 transition-all"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-stone-200 hover:text-white hover:bg-white/10 transition-all"
           >
             <Globe className="w-4 h-4" />
             View Website
           </Link>
           <button
             onClick={() => logout()}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-rose-450 hover:text-white hover:bg-rose-950/30 transition-all text-left cursor-pointer"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-rose-250 hover:text-white hover:bg-rose-900/30 transition-all text-left cursor-pointer"
           >
             <LogOut className="w-4 h-4" />
             Sign Out
