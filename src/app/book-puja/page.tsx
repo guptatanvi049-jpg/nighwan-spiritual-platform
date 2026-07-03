@@ -478,7 +478,7 @@ export default function BookPujaPage() {
             <div 
               className="lg:col-span-5 rounded-3xl p-8 border border-[#cfa856]/20 text-white relative shadow-xl overflow-hidden flex flex-col justify-between h-full space-y-6 min-h-[400px]"
               style={{
-                backgroundImage: "linear-gradient(to bottom, rgba(10, 14, 26, 0.8) 0%, rgba(10, 14, 26, 0.95) 100%), url('/puja_ritual.png')",
+                backgroundImage: "linear-gradient(to bottom, rgba(123, 17, 19, 0.88) 0%, rgba(75, 8, 10, 0.97) 100%), url('/puja_ritual.png')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
